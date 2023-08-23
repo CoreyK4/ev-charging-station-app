@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block HEAD %}
+
+<script src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' />
+
+{% endblock %}
+
+{% block BODY %}
+<h1>Hooray! The server and Jinja are working!</h1>
+<section class="map">
+  <div id="map"></div>
+</section>
+{% endblock %}
+
+{% block FOOTER %}
+<script>
+  mapboxgl.accessToken = '{{ MAPBOX_API_KEY }}';
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v11',
+    center: [-74.044502, 40.689247],
+    zoom: 11
+  });
+</script>
+<script src="/static/js/mapbox.js"></script>
+{% endblock %}
