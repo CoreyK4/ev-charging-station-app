@@ -38,13 +38,14 @@ async function fetch_locations(data) {
 
 let markers = {};
 
-function add_markers(locations_promise, map) {
+function add_markers(locations_promise, map, infowindow) {
     locations_promise.then((locations) => {
-        const infowindow = new google.maps.InfoWindow();
+        
 
         for (const location of locations) {
             const key = `${location.lat},${location.lng}`;
 
+            // Only create a new marker if one isn't already rendered on the map in that location
             if (!markers[key]) {
 
                 const marker = new google.maps.Marker({
@@ -99,11 +100,13 @@ function initMap() {
         zoom: 12
     });
 
+    const infowindow = new google.maps.InfoWindow();
+
     google.maps.event.addListener(map, 'idle', () => {
         remove_markers(map);
 
         if (map.getZoom() >= 12) {
-            add_markers(fetch_locations(get_bounds(map)), map);
+            add_markers(fetch_locations(get_bounds(map)), map, infowindow);
         }
     });
 };
