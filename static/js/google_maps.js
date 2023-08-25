@@ -1,6 +1,6 @@
 'use strict'
 
-function get_bounds(map) {
+function getCurrentBounds(map) {
     const bounds = map.getBounds();
     const southWest = bounds.getSouthWest();
     const northEast = bounds.getNorthEast();
@@ -16,7 +16,7 @@ function get_bounds(map) {
 }
 
 // Fetch the location data from the server
-async function fetch_locations(data) {
+async function fetchLocations(data) {
     const response = await fetch('/api/fetch_chargers', {
         method: 'POST',
         headers: {
@@ -38,7 +38,7 @@ async function fetch_locations(data) {
 
 let markers = {};
 
-function add_markers(locations_promise, map, infowindow) {
+function addMarkers(locations_promise, map, infowindow) {
     locations_promise.then((locations) => {
         
 
@@ -73,7 +73,7 @@ function add_markers(locations_promise, map, infowindow) {
     });
 };
 
-function remove_markers(map) {
+function removeMarkers(map) {
     if (markers) {
         const bounds = map.getBounds();
 
@@ -90,6 +90,7 @@ function remove_markers(map) {
 };
 
 function initMap() {
+    // Statue of Liberty Coordinates
     const solCoords = {
         lat: 40.689247,
         lng: -74.044502
@@ -103,10 +104,12 @@ function initMap() {
     const infowindow = new google.maps.InfoWindow();
 
     google.maps.event.addListener(map, 'idle', () => {
-        remove_markers(map);
+        removeMarkers(map);
 
         if (map.getZoom() >= 12) {
-            add_markers(fetch_locations(get_bounds(map)), map, infowindow);
+            const bounds = getCurrentBounds(map);
+            const locations = fetchLocations(bounds);
+            addMarkers(locations, map, infowindow);
         }
     });
 };
