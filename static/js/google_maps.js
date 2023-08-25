@@ -36,46 +36,55 @@ async function fetch_locations(data) {
     return locations;
 }
 
-let markers = [];
+let markers = {};
 
 function add_markers(locations_promise, map) {
     locations_promise.then((locations) => {
-        const infowindow = new google.maps.InfoWindow({
-            content: location.title,
-            ariaLabel: location.title
-        });
+        const infowindow = new google.maps.InfoWindow();
 
         for (const location of locations) {
-            const marker = new google.maps.Marker({
-                position: {
-                    lat: location.lat,
-                    lng: location.lng
-                },
-                title: location.title,
-                map: map
-            });
+            const key = `${location.lat},${location.lng}`;
 
-            marker.addListener("click", () => {
-                infowindow.setContent(location.title);
-                infowindow.setPosition(marker.getPosition());
-                infowindow.open({
-                    anchor: marker,
-                    map,
+            if (!markers[key]) {
+
+                const marker = new google.maps.Marker({
+                    position: {
+                        lat: location.lat,
+                        lng: location.lng
+                    },
+                    title: location.title,
+                    map: map
                 });
-            });
 
-            markers.push(marker);
+                marker.addListener("click", () => {
+                    infowindow.setContent(location.title);
+                    infowindow.setPosition(marker.getPosition());
+                    infowindow.open({
+                        anchor: marker,
+                        map,
+                    });
+                });
+
+                markers[key] = marker;
+
+            }
         }
     });
 };
 
-function remove_markers() {
+function remove_markers(map) {
     if (markers) {
-        for (const marker of markers) {
-            marker.setMap(null);
-        }
+        const bounds = map.getBounds();
 
-        markers = [];
+        for (const key in markers) {
+            const marker = markers[key];
+
+            // Remove the marker if it falls outside the bounds
+            if (!bounds.contains(marker.getPosition())) {
+                marker.setMap(null);
+                delete markers[key];
+            }
+        }
     }
 };
 
@@ -91,7 +100,10 @@ function initMap() {
     });
 
     google.maps.event.addListener(map, 'idle', () => {
-        remove_markers();
-        add_markers(fetch_locations(get_bounds(map)), map);
+        remove_markers(map);
+
+        if (map.getZoom() >= 12) {
+            add_markers(fetch_locations(get_bounds(map)), map);
+        }
     });
 };
