@@ -1,14 +1,23 @@
 {% extends "base.html" %}
 
+{% block HEAD %}
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+<!-- Don't use this in production: -->
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel" src="{{ url_for('static', filename='jsx/google_maps.jsx') }}"></script>
+{% endblock %}
+
 {% block BODY %}
-    <h1>Hooray! The server and Jinja are working!</h1>
-    <section class="map">
-        <div id="map"></div>
-    </section>
+<section class="map row vh-100">
+    <div class="col d-flex flex-column" id="map"></div>
+    <div class="col-3" id="sidebar"></div>
+</section>
 {% endblock %}
 
 {% block FOOTER %}
-    <script src="/static/js/google_maps.js"></script>
+    <script src="{{ url_for('static', filename='js/google_maps.js') }}"></script>
     <script
     async
     src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAPS_API_KEY }}&callback=initMap">

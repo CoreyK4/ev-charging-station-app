@@ -101,6 +101,7 @@ function initMap() {
         zoom: 12
     });
 
+    // Add the info window outside of any listeners to avoid creating more than one info window
     const infowindow = new google.maps.InfoWindow();
 
     google.maps.event.addListener(map, 'idle', () => {
