@@ -7,12 +7,8 @@ app = Flask(__name__)
 @app.route("/map")
 def show_index():
     """Index page"""
-    map_type = request.args.get("map_type", "mapbox")
+    return render_template("google_maps.html", GOOGLE_MAPS_API_KEY=environ.get("GOOGLE_MAPS_API_KEY"))
 
-    if map_type == "google_maps":
-        return render_template("google_maps.html", GOOGLE_MAPS_API_KEY=environ.get("GOOGLE_MAPS_API_KEY"))
-    elif map_type == "mapbox":
-        return render_template("mapbox.html", MAPBOX_API_KEY=environ.get("MAPBOX_API_KEY"))
 
 @app.route("/api/fetch_chargers", methods=["POST"])
 def fetch_chargers():
