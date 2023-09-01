@@ -30,7 +30,13 @@ async function fetchLocations(data) {
     const locations = results.map(result => ({
         'lng': result.AddressInfo.Longitude,
         'lat': result.AddressInfo.Latitude,
-        'title': result.AddressInfo.Title
+        'title': result.AddressInfo.Title,
+        'addressLine1': result.AddressInfo.AddressLine1,
+        'addressLine2': result.AddressInfo.AddressLine2,
+        'town': result.AddressInfo.Town,
+        'stateOrProvince': result.AddressInfo.StateOrProvince,
+        'postcode': result.AddressInfo.Postcode
+
     }));
 
     return locations;
@@ -40,7 +46,7 @@ let markers = {};
 
 function addMarkers(locations_promise, map, infowindow) {
     locations_promise.then((locations) => {
-        
+
 
         for (const location of locations) {
             const key = `${location.lat},${location.lng}`;
@@ -53,12 +59,19 @@ function addMarkers(locations_promise, map, infowindow) {
                         lat: location.lat,
                         lng: location.lng
                     },
+                    map: map,
                     title: location.title,
-                    map: map
+                    addressLine1: location.addressLine1,
+                    addressLine2: location.addressLine2,
+                    town: location.town,
+                    stateOrProvince: location.stateOrProvince,
+                    postcode: location.postcode
                 });
 
+                const infoWindowContent = `<h2 class="infoWindowTitle">${location.title}</h2><p class="infoWindowAddress">${location.addressLine1}</p><p class="infoWindowAddress">${location.town}, ${location.stateOrProvince} ${location.postcode}</p>`
+
                 marker.addListener("click", () => {
-                    infowindow.setContent(location.title);
+                    infowindow.setContent(infoWindowContent);
                     infowindow.setPosition(marker.getPosition());
                     infowindow.open({
                         anchor: marker,
@@ -70,6 +83,9 @@ function addMarkers(locations_promise, map, infowindow) {
 
             }
         }
+        // Dispatch a custom event to inform React that markers have been updated.
+        const event = new Event('markersUpdated');
+        document.dispatchEvent(event);
     });
 };
 
@@ -89,6 +105,19 @@ function removeMarkers(map) {
     }
 };
 
+function animateMarker(key) {
+    const marker = markers[key];
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+    marker.setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
+
+    // Stop animation after 2 seconds
+    setTimeout(() => {
+        marker.setAnimation(null);
+    }, 2000);
+}
+
+let map;
+
 function initMap() {
     // Statue of Liberty Coordinates
     const solCoords = {
@@ -96,7 +125,7 @@ function initMap() {
         lng: -74.044502
     };
 
-    const map = new google.maps.Map(document.querySelector('#map'), {
+    map = new google.maps.Map(document.querySelector('#map'), {
         center: solCoords,
         zoom: 12
     });
