@@ -25,7 +25,7 @@ def fetch_chargers():
     neLat = request.json.get("neLat")
     neLng = request.json.get("neLng")
     bounding_box = f"({neLat},{neLng}),({swLat},{swLng})"
-    url = f"{base_url}?boundingbox={bounding_box}&maxresults=500"
+    url = f"{base_url}?boundingbox={bounding_box}&maxresults=1000"
 
     response = requests.get(url, headers=headers)
 
