@@ -33,9 +33,9 @@ class Favorite(db.Model):
 
     # Columns
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    user_id = db.Column(db.String, db.ForeignKey("users.id"))
-    latitude = db.Column(db.Double, nullable=False)
-    longitude = db.Column(db.Double, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    latitude = db.Column(db.Numeric, nullable=False)
+    longitude = db.Column(db.Numeric, nullable=False)
 
     # Relationships
     user = db.relationship("User", back_populates="favorites")
@@ -51,10 +51,10 @@ class Review(db.Model):
 
     # Columns
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    user_id = db.Column(db.String, db.ForeignKey("users.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     charging_station_id = db.Column(db.Integer, nullable=False)
-    latitude = db.Column(db.Double, nullable=False)
-    longitude = db.Column(db.Double, nullable=False)
+    latitude = db.Column(db.Numeric, nullable=False)
+    longitude = db.Column(db.Numeric, nullable=False)
     title = db.Column(db.String, nullable=False)
     comment = db.Column(db.Text, nullable=False)
     rating = db.Column(db.Integer, nullable=False)
@@ -68,6 +68,7 @@ class Review(db.Model):
     
 def connect_to_db(flask_app, db_uri="postgresql:///ev_charge"):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
+    flask_app.config["SQLALCHEMY_ECHO"] = False
     flask_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     db.app = flask_app
@@ -77,6 +78,6 @@ def connect_to_db(flask_app, db_uri="postgresql:///ev_charge"):
 
 
 if __name__ == "__main__":
-    from app import app
+    from server import app
 
     connect_to_db(app)
