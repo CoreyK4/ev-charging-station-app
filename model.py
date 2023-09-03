@@ -24,3 +24,21 @@ class User(db.Model):
 
     def __repr__(self):
         return f"<User id={self.id} username={self.username}>"
+    
+
+class Favorite(db.Model):
+    """A favorite."""
+
+    __tablename__ = "favorites"
+
+    # Columns
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    user_id = db.Column(db.String, db.ForeignKey("users.id"))
+    latitude = db.Column(db.Double, nullable=False)
+    longitude = db.Column(db.Double, nullable=False)
+
+    # Relationships
+    user = db.relationship("User", back_populates="favorites")
+
+    def __repr__(self):
+        return f"<Favorite id={self.id} lat/lng={self.latitude},{self.longitude}>"
