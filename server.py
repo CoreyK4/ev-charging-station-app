@@ -1,10 +1,13 @@
 from os import environ
 import requests
 from flask import Flask, request, render_template, jsonify
+from model import connect_to_db, db
+import crud
 
 app = Flask(__name__)
+app.secret_key = environ.get("FLASK_SECRET_KEY")
 
-@app.route("/map")
+@app.route("/")
 def show_index():
     """Index page"""
     return render_template("google_maps.html", GOOGLE_MAPS_API_KEY=environ.get("GOOGLE_MAPS_API_KEY"))
@@ -32,4 +35,5 @@ def fetch_chargers():
         return jsonify(error="An error occurred"), 400
 
 if __name__ == "__main__":
+    connect_to_db(app)
     app.run(debug=True, host="0.0.0.0", port=5001)
