@@ -127,7 +127,8 @@ function initMap() {
 
     map = new google.maps.Map(document.querySelector('#map'), {
         center: solCoords,
-        zoom: 12
+        zoom: 12,
+        mapTypeControl: false
     });
 
     // Add the info window outside of any listeners to avoid creating more than one info window

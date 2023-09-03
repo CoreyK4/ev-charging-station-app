@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
 {% block HEAD %}
-<link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+<link rel="stylesheet"
+    href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 
@@ -12,15 +13,55 @@
 {% endblock %}
 
 {% block BODY %}
+<nav class="offcanvas offcanvas-start offcanvas-size-sm" tabindex="-1" id="offcanvasExample"
+    aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header border-2 border-bottom">
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">EV Charge Map</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div className="list-group list-group-flush border-bottom">
+            <a class="list-group-item list-group-item-action py-3 lh-tight border-bottom">Link 1</a>
+            <a class="list-group-item list-group-item-action py-3 lh-tight border-bottom">Link 2</a>
+            <a class="list-group-item list-group-item-action py-3 lh-tight border-bottom">Link 3</a>
+            <a class="list-group-item list-group-item-action py-3 lh-tight border-bottom">Link 4</a>
+            <a class="list-group-item list-group-item-action py-3 lh-tight border-bottom">Link 5</a>
+        </div>
+        <div>
+            Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists,
+            etc.
+        </div>
+        <div class="dropdown mt-3">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-bs-toggle="dropdown">
+                Dropdown button
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="hamburger">
+    <div class="container hamburger-container">
+        <input class="checkbox" type="checkbox" name="" id="" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasExample" />
+        <div class="hamburger-lines">
+            <span class="line line1"></span>
+            <span class="line line2"></span>
+            <span class="line line3"></span>
+        </div>
+    </div>
+</div>
 <section class="map row vh-100">
-    <div class="col d-flex flex-column" id="map"></div>
-    <div class="col-3" id="sidebar"></div>
+    <div class="col" id="map"></div>
+    <div class="col-3 px-0" id="sidebar"></div>
 </section>
 {% endblock %}
 
 {% block FOOTER %}
-    <script
-    async
-    src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAPS_API_KEY }}&callback=initMap">
-    </script>
+<script async src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAPS_API_KEY }}&callback=initMap">
+</script>
 {% endblock %}
