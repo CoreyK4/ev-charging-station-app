@@ -1,5 +1,7 @@
 """CRUD Operations"""
 
+from model import db, User, Favorite, Review, connect_to_db
+
 # User Operations
 def create_user(username, password_hash, email, first_name, last_name):
     """Create and return a new user"""
@@ -11,3 +13,8 @@ def create_user(username, password_hash, email, first_name, last_name):
 # Favorite Operations
 
 # Review Operations
+
+if __name__ == "__main__":
+    from server import app
+
+    connect_to_db(app)
