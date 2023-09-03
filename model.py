@@ -42,3 +42,41 @@ class Favorite(db.Model):
 
     def __repr__(self):
         return f"<Favorite id={self.id} lat/lng={self.latitude},{self.longitude}>"
+    
+
+class Review(db.Model):
+    """A review."""
+
+    __tablename__ = "reviews"
+
+    # Columns
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    user_id = db.Column(db.String, db.ForeignKey("users.id"))
+    charging_station_id = db.Column(db.Integer, nullable=False)
+    latitude = db.Column(db.Double, nullable=False)
+    longitude = db.Column(db.Double, nullable=False)
+    title = db.Column(db.String, nullable=False)
+    comment = db.Column(db.Text, nullable=False)
+    rating = db.Column(db.Integer, nullable=False)
+    created_at = db.Column(db.DateTime)
+
+    # Relationships
+    user = db.relationship("User", back_populates="reviews")
+
+    def __repr__(self):
+        return f"<Review id={self.id} lat/lng={self.latitude},{self.longitude}>"
+    
+def connect_to_db(flask_app, db_uri="postgresql:///ev_charge"):
+    flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
+    flask_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+    db.app = flask_app
+    db.init_app(flask_app)
+
+    print("Connected to the db!")
+
+
+if __name__ == "__main__":
+    from app import app
+
+    connect_to_db(app)
