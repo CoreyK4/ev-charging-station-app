@@ -10,6 +10,12 @@ def create_user(username, password_hash, email, first_name, last_name):
 
     return user
 
+
+def get_user_by_username(username):
+    """Return a user by email."""
+
+    return User.query.filter(User.username == username).first()
+
 # Favorite Operations
 
 # Review Operations
