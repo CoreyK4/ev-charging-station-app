@@ -3,9 +3,13 @@ import requests
 from flask import Flask, request, render_template, jsonify
 from model import connect_to_db, db
 import crud
+import hashlib
 
 app = Flask(__name__)
 app.secret_key = environ.get("FLASK_SECRET_KEY")
+
+def generate_sha256_hash(password):
+    return hashlib.sha256(password.encode()).hexdigest()
 
 @app.route("/")
 def show_index():
@@ -33,6 +37,31 @@ def fetch_chargers():
         return jsonify(response.json())
     else:
         return jsonify(error="An error occurred"), 400
+    
+@app.route("/register", methods=["POST"])
+def register_user():
+    """Register a user into the database"""
+
+    username = request.json.get("username")
+    password_hash = generate_sha256_hash(request.json.get("password"))
+    email = request.json.get("email")
+    first_name = request.json.get("first_name")
+    last_name = request.json.get("last_name")
+
+    user = crud.get_user_by_username(username)
+    try:
+        if user:
+            return jsonify({"message": "An account with that username already exists."}), 409
+        else:
+            user = crud.create_user(username, password_hash, email, first_name, last_name)
+            db.session.add(user)
+            db.session.commit()
+
+            return jsonify({"message": "Your account was created successfully and you are now logged in!"}), 201
+        
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return jsonify({"message": "Internal Server Error"}), 500
 
 if __name__ == "__main__":
     connect_to_db(app)
