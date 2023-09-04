@@ -16,47 +16,34 @@
 }
 
 .hamburger-container {
-  /* Positioning */
   position: absolute;
-  /* or 'fixed' depending on your requirement */
   top: 10px;
-  /* Adjust as needed */
   left: 10px;
-  /* Adjust as needed */
-  /* Existing styles */
   width: 60px;
-  /* Set a width */
   height: 50px;
-  /* Set a height */
   border: 2px solid #0e2431;
-  /* Add border */
   background-color: rgba(201, 201, 201, 0.8);
-  /* Add background color */
   border-radius: 8px;
-  /* Add rounded corners */
 
-  /* Center the hamburger lines within this container */
   display: flex;
   align-items: center;
   justify-content: center;
+
   z-index: 1000;
 }
 
 .hamburger-container .checkbox,
 .hamburger-container .hamburger-lines {
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  /* ... existing styles ... */
 }
 
 .hamburger-container .checkbox {
-  position: absolute;
   display: block;
   height: 26px;
   width: 32px;
-  /* top: 17px;
-  left: 20px; */
   z-index: 5;
   opacity: 0;
   cursor: pointer;
@@ -66,9 +53,6 @@
   display: block;
   height: 26px;
   width: 32px;
-  position: absolute;
-  /* top: 17px;
-  left: 20px; */
   z-index: 2;
   display: flex;
   flex-direction: column;
