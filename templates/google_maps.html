@@ -13,15 +13,16 @@
 {% endblock %}
 
 {% block BODY %}
-<nav class="offcanvas offcanvas-start offcanvas-size-sm" tabindex="-1" id="offcanvasExample"
-    aria-labelledby="offcanvasExampleLabel">
+<nav class="offcanvas offcanvas-start offcanvas-size-sm" tabindex="-1" id="mainNavigation"
+    aria-labelledby="mainNavigationLabel">
     <div class="offcanvas-header border-2 border-bottom">
-        <h5 class="offcanvas-title" id="offcanvasExampleLabel">EV Charge Map</h5>
+        <h5 class="offcanvas-title" id="mainNavigationLabel">EV Charge Map</h5>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
         <div className="list-group list-group-flush border-bottom">
-            <a class="list-group-item list-group-item-action py-3 lh-tight border-bottom">Link 1</a>
+            <a class="list-group-item list-group-item-action py-3 lh-tight border-bottom" data-bs-toggle="modal"
+                data-bs-target="#registerModal">Link 1</a>
             <a class="list-group-item list-group-item-action py-3 lh-tight border-bottom">Link 2</a>
             <a class="list-group-item list-group-item-action py-3 lh-tight border-bottom">Link 3</a>
             <a class="list-group-item list-group-item-action py-3 lh-tight border-bottom">Link 4</a>
@@ -47,7 +48,7 @@
 <div class="hamburger">
     <div class="container hamburger-container">
         <input class="checkbox" type="checkbox" name="" id="" data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvasExample" />
+            data-bs-target="#mainNavigation" />
         <div class="hamburger-lines">
             <span class="line line1"></span>
             <span class="line line2"></span>
@@ -59,6 +60,50 @@
     <div class="col" id="map"></div>
     <div class="col-3 px-0" id="sidebar"></div>
 </section>
+
+<!-- Register Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="registerModalLabel">Register</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/register" method="POST">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="mb-3 col">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" name="username" class="form-control" id="username">
+                        </div>
+                        <div class="mb-3 col">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" name="password" class="form-control" id="password">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email address</label>
+                        <input type="email" name="email" class="form-control" id="email">
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col">
+                            <label for="first_name" class="form-label">First Name</label>
+                            <input type="text" name="first_name" class="form-control" id="first_name">
+                        </div>
+                        <div class="mb-3 col">
+                            <label for="last_name" class="form-label">Last Name</label>
+                            <input type="text" name="last_name" class="form-control" id="last_name">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block FOOTER %}
