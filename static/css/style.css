@@ -1,85 +1,103 @@
 #map {
-    height: 100vh;
-    width: 100vw;
+  height: 100vh;
+  width: 100vw;
 }
 
 .infoWindowTitle {
-    font-size: 16px;
+  font-size: 16px;
 }
 
 .infoWindowAddress {
-    margin-bottom: 2px;
+  margin-bottom: 2px;
 }
 
 .sidebarAddress p {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
-#hamburger {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    z-index: 99;
+.hamburger-container {
+  /* Positioning */
+  position: absolute;
+  /* or 'fixed' depending on your requirement */
+  top: 10px;
+  /* Adjust as needed */
+  left: 10px;
+  /* Adjust as needed */
+  /* Existing styles */
+  width: 60px;
+  /* Set a width */
+  height: 50px;
+  /* Set a height */
+  border: 2px solid #0e2431;
+  /* Add border */
+  background-color: rgba(201, 201, 201, 0.8);
+  /* Add background color */
+  border-radius: 8px;
+  /* Add rounded corners */
+
+  /* Center the hamburger lines within this container */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
 }
 
-  .menu__btn {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    width: 26px;
-    height: 26px;
-    cursor: pointer;
-    z-index: 1;
-  }
+.hamburger-container .checkbox,
+.hamburger-container .hamburger-lines {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* ... existing styles ... */
+}
 
-  .hamburger-container .checkbox {
-    position: absolute;
-    display: block;
-    height: 32px;
-    width: 32px;
-    top: 20px;
-    left: 20px;
-    z-index: 5;
-    opacity: 0;
-    cursor: pointer;
-  }
-  
-  .hamburger-container .hamburger-lines {
-    display: block;
-    height: 26px;
-    width: 32px;
-    position: absolute;
-    top: 17px;
-    left: 20px;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  
-  .hamburger-container .hamburger-lines .line {
-    display: block;
-    height: 4px;
-    width: 100%;
-    border-radius: 10px;
-    background: #0e2431;
-  }
-  
-  .hamburger-container .hamburger-lines .line1 {
-    transform-origin: 0% 0%;
-    transition: transform 0.4s ease-in-out;
-  }
-  
-  .hamburger-container .hamburger-lines .line2 {
-    transition: transform 0.2s ease-in-out;
-  }
-  
-  .hamburger-container .hamburger-lines .line3 {
-    transform-origin: 0% 100%;
-    transition: transform 0.4s ease-in-out;
-  }
+.hamburger-container .checkbox {
+  position: absolute;
+  display: block;
+  height: 26px;
+  width: 32px;
+  /* top: 17px;
+  left: 20px; */
+  z-index: 5;
+  opacity: 0;
+  cursor: pointer;
+}
 
-  /* .hamburger-container input[type="checkbox"]:checked ~ .hamburger-lines .line1 {
+.hamburger-container .hamburger-lines {
+  display: block;
+  height: 26px;
+  width: 32px;
+  position: absolute;
+  /* top: 17px;
+  left: 20px; */
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hamburger-container .hamburger-lines .line {
+  display: block;
+  height: 4px;
+  width: 100%;
+  border-radius: 10px;
+  background: #0e2431;
+}
+
+.hamburger-container .hamburger-lines .line1 {
+  transform-origin: 0% 0%;
+  transition: transform 0.4s ease-in-out;
+}
+
+.hamburger-container .hamburger-lines .line2 {
+  transition: transform 0.2s ease-in-out;
+}
+
+.hamburger-container .hamburger-lines .line3 {
+  transform-origin: 0% 100%;
+  transition: transform 0.4s ease-in-out;
+}
+
+/* .hamburger-container input[type="checkbox"]:checked ~ .hamburger-lines .line1 {
     transform: rotate(45deg);
   }
   
@@ -91,6 +109,6 @@
     transform: rotate(-45deg);
   } */
 
-  .offcanvas {
-    width: 15vw !important;
-  }
+.offcanvas {
+  width: 15vw !important;
+}
