@@ -1,6 +1,7 @@
-const registrationSubmitButton = document.getElementById('registrationForm');
+// Register User
+const registrationForm = document.getElementById('registrationForm');
 
-registrationSubmitButton.addEventListener('submit', (e) => {
+registrationForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
     const formInputs = {
@@ -31,6 +32,50 @@ registrationSubmitButton.addEventListener('submit', (e) => {
                 alert(data.message);
               } else if (statusCode === 409) {
                 // User already exists
+                alert(data.message);
+              } else if (statusCode === 500) {
+                // Internal server error
+                alert(data.message);
+              } else {
+                // Other status code
+                alert('Unexpected status code:', statusCode);
+              }
+        })
+
+
+});
+
+// Login User
+const loginForm = document.getElementById('loginForm');
+
+loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const formInputs = {
+        username: document.getElementById('loginUsername').value,
+        password: document.getElementById('loginPassword').value,
+    }
+
+    fetch('/login', {
+        method: 'POST',
+        body: JSON.stringify(formInputs),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+        .then(response => {
+            const statusCode = response.status;
+
+            return response.json().then(data => {
+                return { statusCode, data };
+            });
+        })
+        .then(({ statusCode, data }) => {
+            if (statusCode === 200) {
+                // User registered successfully
+                alert(data.message);
+              } else if (statusCode === 401) {
+                // Invalid username or password
                 alert(data.message);
               } else if (statusCode === 500) {
                 // Internal server error

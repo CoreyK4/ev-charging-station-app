@@ -62,6 +62,20 @@ def register_user():
     except Exception as e:
         print(f"An error occurred: {e}")
         return jsonify({"message": "Internal Server Error"}), 500
+    
+@app.route("/login", methods=["POST"])
+def process_login():
+    """Process user login."""
+
+    username = request.json.get("username")
+    hashed_password = generate_sha256_hash(request.json.get("password"))
+    user = crud.get_user_by_username(username)
+
+    if not user or user.password_hash != hashed_password:
+        return jsonify({'message': 'Invalid username or password.'}), 401
+    else:
+        return jsonify({'message': 'Logged in successfully!'}), 200
+    
 
 if __name__ == "__main__":
     connect_to_db(app)

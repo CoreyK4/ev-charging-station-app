@@ -23,7 +23,8 @@
         <div className="list-group list-group-flush border-bottom">
             <a class="list-group-item list-group-item-action py-3 lh-tight border-bottom" data-bs-toggle="modal"
                 data-bs-target="#registerModal">Register</a>
-            <a class="list-group-item list-group-item-action py-3 lh-tight border-bottom">Link 2</a>
+            <a class="list-group-item list-group-item-action py-3 lh-tight border-bottom" data-bs-toggle="modal"
+                data-bs-target="#loginModal">Log In</a>
             <a class="list-group-item list-group-item-action py-3 lh-tight border-bottom">Link 3</a>
             <a class="list-group-item list-group-item-action py-3 lh-tight border-bottom">Link 4</a>
             <a class="list-group-item list-group-item-action py-3 lh-tight border-bottom">Link 5</a>
@@ -99,6 +100,36 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary" id="submitRegistration">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="loginModalLabel">Log In</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/login" method="POST" id="loginForm">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="mb-3 col">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" name="username" class="form-control" id="loginUsername" required>
+                        </div>
+                        <div class="mb-3 col">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" name="password" class="form-control" id="loginPassword" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="submitLogin">Submit</button>
                 </div>
             </form>
         </div>
