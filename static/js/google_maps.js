@@ -28,6 +28,7 @@ async function fetchLocations(data) {
     const results = await response.json();
 
     const locations = results.map(result => ({
+        'id': result.ID,
         'lng': result.AddressInfo.Longitude,
         'lat': result.AddressInfo.Latitude,
         'title': result.AddressInfo.Title,
@@ -60,6 +61,7 @@ function addMarkers(locations_promise, map, infowindow) {
                         lng: location.lng
                     },
                     map: map,
+                    id: location.id,
                     title: location.title,
                     addressLine1: location.addressLine1,
                     addressLine2: location.addressLine2,
