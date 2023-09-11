@@ -38,6 +38,25 @@ def fetch_chargers():
     else:
         return jsonify(error="An error occurred"), 400
     
+
+@app.route("/api/fetch_charger_by_id", methods=["POST"])
+def fetch_chargers():
+    """API to fetch a single charging station by ID"""
+
+    api_key = environ.get("OPEN_CHARGE_MAP_API_KEY")
+    headers = {"X-API-Key": api_key}
+    base_url = "https://api.openchargemap.io/v3/poi"
+    id = request.json.get("id")
+    url = f"{base_url}?chargepointid={id}"
+
+    response = requests.get(url, headers=headers)
+
+    if response.status_code == 200:
+        return jsonify(response.json())
+    else:
+        return jsonify(error="An error occurred"), 400
+    
+    
 @app.route("/register", methods=["POST"])
 def register_user():
     """Register a user into the database"""
