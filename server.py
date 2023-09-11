@@ -74,7 +74,7 @@ def process_login():
     if not user or user.password_hash != hashed_password:
         return jsonify({'message': 'Invalid username or password.'}), 401
     else:
-        return jsonify({'message': 'Logged in successfully!'}), 200
+        return jsonify({'user_id': user.id}), 200
     
 
 if __name__ == "__main__":
