@@ -40,7 +40,7 @@ def fetch_chargers():
     
 
 @app.route("/api/fetch_charger_by_id", methods=["POST"])
-def fetch_chargers():
+def fetch_charger_by_id():
     """API to fetch a single charging station by ID"""
 
     api_key = environ.get("OPEN_CHARGE_MAP_API_KEY")
