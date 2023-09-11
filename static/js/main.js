@@ -73,7 +73,8 @@ loginForm.addEventListener('submit', (e) => {
         .then(({ statusCode, data }) => {
             if (statusCode === 200) {
                 // User registered successfully
-                alert(data.message);
+                localStorage.setItem('user_id', data.user_id);
+                alert('You have successfully logged in!');
               } else if (statusCode === 401) {
                 // Invalid username or password
                 alert(data.message);
