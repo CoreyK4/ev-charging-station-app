@@ -67,7 +67,9 @@ function addMarkers(locations_promise, map, infowindow) {
                     addressLine2: location.addressLine2,
                     town: location.town,
                     stateOrProvince: location.stateOrProvince,
-                    postcode: location.postcode
+                    postcode: location.postcode,
+                    lat: location.lat,
+                    lng: location.lng
                 });
 
                 const infoWindowContent = `<h2 class="infoWindowTitle">${location.title}</h2><p class="infoWindowAddress">${location.addressLine1}</p><p class="infoWindowAddress">${location.town}, ${location.stateOrProvince} ${location.postcode}</p>`
