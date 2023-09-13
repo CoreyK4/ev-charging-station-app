@@ -32,9 +32,9 @@ class Favorite(db.Model):
     __tablename__ = "favorites"
 
     # Columns
-    # The id here will take the OCM POI ID
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    ocm_poi_id = db.Column(db.Integer, nullable=False)
     latitude = db.Column(db.Numeric, nullable=False)
     longitude = db.Column(db.Numeric, nullable=False)
 
