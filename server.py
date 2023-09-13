@@ -56,6 +56,76 @@ def fetch_charger_by_id():
     else:
         return jsonify(error="An error occurred"), 400
     
+
+@app.route("/add_favorite", methods=["POST"])
+def add_favorite():
+    """Add a favorite to the database"""
+
+    user_id = request.json.get("user_id")
+    ocm_poi_id = request.json.get("ocm_poi_id")
+    latitude = request.json.get("latitude")
+    longitude = request.json.get("longitude")
+
+    favorites = crud.get_favorites_by_user_id(user_id)
+
+    if favorites:
+        for favorite in favorites:
+            if favorite.ocm_poi_id == ocm_poi_id:
+                return jsonify({"message": "You already added this favorite!"}), 200
+    
+    favorite = crud.add_favorite(user_id, ocm_poi_id, latitude, longitude)
+    db.session.add(favorite)
+    db.session.commit()
+
+    return jsonify({"message": "Successfully added favorite!"}), 200
+
+@app.route("/get_favorites", methods=["POST"])
+def get_favorites():
+    """Return a user's favorites"""
+
+    user_id = request.json.get("user_id")
+
+    db_favorites = crud.get_favorites_by_user_id(user_id)
+
+    api_key = environ.get("OPEN_CHARGE_MAP_API_KEY")
+    headers = {"X-API-Key": api_key}
+    base_url = "https://api.openchargemap.io/v3/poi"
+
+    favorites = []
+    ids = ""
+
+    # Build the ids string for the URL
+    if db_favorites:
+        for favorite in db_favorites:
+            if ids == "":
+                ids += str(favorite.ocm_poi_id)
+            else:
+                ids += f',{favorite.ocm_poi_id}'
+
+        url = f"{base_url}?chargepointid={ids}"
+
+        response = requests.get(url, headers=headers)
+
+        if response.status_code == 200:
+            data = response.json()
+        else:
+            return jsonify(error="An error occurred"), 400
+        
+        for favorite in data:
+            favorites.append({
+                "title": favorite.get('AddressInfo').get('Title'),
+                "addressLine1": favorite.get('AddressInfo').get('AddressLine1'),
+                "addressLine2": favorite.get('AddressInfo').get('AddressLine2'),
+                "town": favorite.get('AddressInfo').get('Town'),
+                "stateOrProvince": favorite.get('AddressInfo').get('StateOrProvince'),
+                "postcode": favorite.get('AddressInfo').get('Postcode')
+                              })
+
+    if favorites:
+                return jsonify({"favorites": favorites}), 200
+    
+    return jsonify({"favorites": []}), 200
+    
     
 @app.route("/register", methods=["POST"])
 def register_user():
