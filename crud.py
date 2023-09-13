@@ -17,6 +17,17 @@ def get_user_by_username(username):
     return User.query.filter(User.username == username).first()
 
 # Favorite Operations
+def add_favorite(user_id, ocm_poi_id, latitude, longitude):
+    """Create and return a new favorite"""
+
+    favorite = Favorite(user_id=user_id, ocm_poi_id=ocm_poi_id, latitude=latitude, longitude=longitude)
+
+    return favorite
+
+
+def get_favorites_by_user_id(user_id):
+
+    return Favorite.query.filter(Favorite.user_id == user_id).all()
 
 # Review Operations
 
