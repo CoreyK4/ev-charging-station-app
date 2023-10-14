@@ -52,20 +52,18 @@ class Review(db.Model):
 
     # Columns
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-    charging_station_id = db.Column(db.Integer, nullable=False)
-    latitude = db.Column(db.Numeric, nullable=False)
-    longitude = db.Column(db.Numeric, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    ocm_poi_id = db.Column(db.Integer, nullable=False)
     title = db.Column(db.String, nullable=False)
     comment = db.Column(db.Text, nullable=False)
     rating = db.Column(db.Integer, nullable=False)
-    created_at = db.Column(db.DateTime)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     # Relationships
     user = db.relationship("User", back_populates="reviews")
 
     def __repr__(self):
-        return f"<Review id={self.id} lat/lng={self.latitude},{self.longitude}>"
+        return f"<Review id={self.id} title={self.title}>"
     
 def connect_to_db(flask_app, db_uri="postgresql:///ev_charge"):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri

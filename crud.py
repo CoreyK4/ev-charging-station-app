@@ -12,7 +12,7 @@ def create_user(username, password_hash, email, first_name, last_name):
 
 
 def get_user_by_username(username):
-    """Return a user by email."""
+    """Return a user by username."""
 
     return User.query.filter(User.username == username).first()
 
@@ -26,10 +26,24 @@ def add_favorite(user_id, ocm_poi_id, latitude, longitude):
 
 
 def get_favorites_by_user_id(user_id):
+    """Return favorites by user_id"""
 
     return Favorite.query.filter(Favorite.user_id == user_id).all()
 
 # Review Operations
+
+def add_review(user_id, ocm_poi_id, title, comment, rating):
+    """Create and return a new review"""
+
+    review = Review(user_id=user_id, ocm_poi_id=ocm_poi_id, title=title, comment=comment, rating=rating)
+
+    return review
+
+def get_reviews_by_station_id(ocm_poi_id):
+    """Return reviews by ocm_poi_id"""
+
+    return Review.query.filter(Review.ocm_poi_id == ocm_poi_id).all()
+
 
 if __name__ == "__main__":
     from server import app

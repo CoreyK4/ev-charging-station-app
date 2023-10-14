@@ -46,13 +46,14 @@ def fetch_charger_by_id():
     api_key = environ.get("OPEN_CHARGE_MAP_API_KEY")
     headers = {"X-API-Key": api_key}
     base_url = "https://api.openchargemap.io/v3/poi"
-    id = request.json.get("id")
+    id = request.json.get("charger_id")
     url = f"{base_url}?chargepointid={id}"
 
     response = requests.get(url, headers=headers)
 
     if response.status_code == 200:
-        return jsonify(response.json())
+        data = response.json()
+        return data[0]
     else:
         return jsonify(error="An error occurred"), 400
     
@@ -113,6 +114,7 @@ def get_favorites():
         
         for favorite in data:
             favorites.append({
+                "id": favorite.get('ID'),
                 "title": favorite.get('AddressInfo').get('Title'),
                 "addressLine1": favorite.get('AddressInfo').get('AddressLine1'),
                 "addressLine2": favorite.get('AddressInfo').get('AddressLine2'),
