@@ -1,5 +1,12 @@
 'use strict'
 
+// Global Variables
+let map;
+let infowindow;
+let markers = {};
+let markerCluster;
+let customMarker;
+
 function getCurrentBounds(map) {
     const bounds = map.getBounds();
     const southWest = bounds.getSouthWest();
@@ -43,7 +50,11 @@ async function fetchLocations(data) {
     return locations;
 }
 
-let markers = {};
+function initMarkerClusterer(map) {
+    markerCluster = new MarkerClusterer(map, [], {
+        imagePath: 'static/img/m'
+    });
+}
 
 function addMarkers(locations_promise, map, infowindow) {
     locations_promise.then((locations) => {
@@ -61,6 +72,7 @@ function addMarkers(locations_promise, map, infowindow) {
                         lng: location.lng
                     },
                     map: map,
+                    icon: customMarker,
                     id: location.id,
                     title: location.title,
                     addressLine1: location.addressLine1,
@@ -87,6 +99,12 @@ function addMarkers(locations_promise, map, infowindow) {
 
             }
         }
+
+        const markerArray = Object.values(markers);
+
+        markerCluster.clearMarkers();
+        markerCluster.addMarkers(markerArray);
+
         // Dispatch a custom event to inform React that markers have been updated.
         const event = new Event('markersUpdated');
         document.dispatchEvent(event);
@@ -109,34 +127,56 @@ function removeMarkers(map) {
     }
 };
 
-function animateMarker(key) {
+function zoomToMarker(key) {
     const marker = markers[key];
-    marker.setAnimation(google.maps.Animation.BOUNCE);
-    marker.setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
-
-    // Stop animation after 2 seconds
-    setTimeout(() => {
-        marker.setAnimation(null);
-    }, 2000);
-}
-
-let map;
+    if (marker) {
+      const position = marker.getPosition();
+      map.setCenter(position);
+  
+      let currentZoom = map.getZoom();
+      const step = 0.2;
+      const interval = 50;
+  
+      const zoomInterval = setInterval(() => {
+        if (currentZoom < 15) {
+          currentZoom += step;
+          map.setZoom(currentZoom);
+        } else {
+          clearInterval(zoomInterval);
+          // Open the InfoWindow after zooming is complete
+          const infoWindowContent = `<h2 class="infoWindowTitle">${marker.title}</h2><p class="infoWindowAddress">${marker.addressLine1}</p><p class="infoWindowAddress">${marker.town}, ${marker.stateOrProvince} ${marker.postcode}</p>`;
+          infowindow.setContent(infoWindowContent);
+          infowindow.setPosition(marker.getPosition());
+          infowindow.open({
+            anchor: marker,
+            map,
+          });
+        }
+      }, interval);
+    }
+  }
 
 function initMap() {
-    // Statue of Liberty Coordinates
-    const solCoords = {
-        lat: 40.689247,
-        lng: -74.044502
+    // Initial coordinates for center when map loads
+    const initCoords = {
+        lat: 40.59748536898963,
+        lng: -73.9593543913952
+    };
+
+    customMarker = {
+        url: '../static/img/default-marker.png',
     };
 
     map = new google.maps.Map(document.querySelector('#map'), {
-        center: solCoords,
-        zoom: 12,
+        center: initCoords,
+        zoom: 14,
         mapTypeControl: false
     });
 
     // Add the info window outside of any listeners to avoid creating more than one info window
-    const infowindow = new google.maps.InfoWindow();
+    infowindow = new google.maps.InfoWindow();
+
+    initMarkerClusterer(map);
 
     google.maps.event.addListener(map, 'idle', () => {
         removeMarkers(map);
