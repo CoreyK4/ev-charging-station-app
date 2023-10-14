@@ -1,3 +1,14 @@
+function showToast(message) {
+  const toastEl = document.getElementById('liveToast');
+  const toastBodyEl = toastEl.querySelector('.toast-body');
+  toastBodyEl.textContent = message;
+
+  const toast = new bootstrap.Toast(toastEl, {
+    delay: 2500,
+  });
+  toast.show();
+}
+
 // Register User
 const registrationForm = document.getElementById('registrationForm');
 
@@ -29,16 +40,16 @@ registrationForm.addEventListener('submit', (e) => {
     .then(({ statusCode, data }) => {
       if (statusCode === 201) {
         // User registered successfully
-        alert(data.message);
+        showToast(data.message);
       } else if (statusCode === 409) {
         // User already exists
-        alert(data.message);
+        showToast(data.message);
       } else if (statusCode === 500) {
         // Internal server error
-        alert(data.message);
+        showToast(data.message);
       } else {
         // Other status code
-        alert('Unexpected status code:', statusCode);
+        showToast('Unexpected status code:', statusCode);
       }
     })
 
@@ -74,23 +85,19 @@ loginForm.addEventListener('submit', (e) => {
       if (statusCode === 200) {
         // User registered successfully
         localStorage.setItem('user_id', data.user_id);
-        alert('You have successfully logged in!');
+        window.dispatchEvent(new Event('storage'));
+        showToast('You have successfully logged in!');
       } else if (statusCode === 401) {
         // Invalid username or password
-        alert(data.message);
+        showToast(data.message);
       } else if (statusCode === 500) {
         // Internal server error
-        alert(data.message);
+        showToast(data.message);
       } else {
         // Other status code
-        alert('Unexpected status code:', statusCode);
+        showToast('Unexpected status code:', statusCode);
       }
     })
 
 
 });
-
-
-// Add Favorite
-// const favoriteButtons = document.querySelectorAll('div.addFavorite');
-
