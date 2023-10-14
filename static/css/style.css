@@ -1,3 +1,9 @@
+a {
+  color: #50b3a2;
+  cursor: pointer;
+  text-decoration: none;
+}
+
 #map {
   height: 100vh;
   width: 100vw;
@@ -81,18 +87,143 @@
   transition: transform 0.4s ease-in-out;
 }
 
-/* .hamburger-container input[type="checkbox"]:checked ~ .hamburger-lines .line1 {
-    transform: rotate(45deg);
-  }
-  
-  .hamburger-container input[type="checkbox"]:checked ~ .hamburger-lines .line2 {
-    transform: scaleY(0);
-  }
-  
-  .hamburger-container input[type="checkbox"]:checked ~ .hamburger-lines .line3 {
-    transform: rotate(-45deg);
-  } */
-
 .offcanvas {
   width: 15vw !important;
+}
+
+.offcanvas-body {
+  height: 100%;
+}
+.list-group {
+  height: 100%;
+}
+
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+/* Header Styles */
+header {
+  background: #50b3a2;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Navigation Styles */
+nav {
+  background: #333;
+}
+
+nav a {
+  padding: 14px 14px;
+  display: inline-block;
+  text-decoration: none;
+}
+
+/* Main Content Styles */
+.main-content {
+  padding: 30px;
+  background: #fff;
+}
+
+/* Footer Styles */
+footer {
+  background: #333;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+/* Button Styles */
+.btn {
+  display: inline-block;
+  background: #50b3a2;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #333;
+}
+
+/* Form Styles */
+form {
+  margin: 20px 0;
+}
+
+form input,
+form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+}
+
+/* Location Details */
+.location-details-left {
+  float: left;
+  width: 50%;
+}
+
+.location-details-right {
+  float: right;
+  width: 50%;
+}
+
+/* Equipment Details */
+.quantity-box {
+  display: inline-block;
+  background-color: #50b3a2;
+  color: #ffffff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.connection-icon {
+  width: 50px;
+  height: auto; 
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+/* Usage Restrictions */
+.bold-text {
+  font-weight: bold;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.back-button:focus {
+  outline: none;
+}
+
+.bi-arrow-left {
+  color: #50b3a2;
+}
+
+.feedback-toast .toast-body {
+  background-color: rgba(80, 179, 162, 0.55);
+  color: black;
+  padding: 15px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.toast-container {
+  z-index: 1050;
 }
