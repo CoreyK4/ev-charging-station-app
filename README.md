@@ -13,6 +13,7 @@ This application aims to provide an easy-to-use interface for finding electric v
 
 ### Prerequisites
 - Python 3.x
+- PostgreSQL
 
 ### Steps
 1. Clone the repository:
@@ -44,11 +45,15 @@ This application aims to provide an easy-to-use interface for finding electric v
    ```
    source secrets.sh
    ```
-8. Run the Flask server:
+8. Seed the database
+   ```
+   python seed_database.py
+   ```
+9. Run the Flask server:
    ```
    python server.py
    ```
-9. Open your browser and go to http://localhost:5001
+10. Open your browser and go to http://localhost:5001
 
 ## Usage
 - **For Users:** After registering and logging in, you can search for available charging stations on the map, view details, and add favorites.
