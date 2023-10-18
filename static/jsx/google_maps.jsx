@@ -10,7 +10,7 @@ function App() {
     const toastEl = document.getElementById('liveToast');
     const toastBodyEl = toastEl.querySelector('.toast-body');
     toastBodyEl.textContent = message;
-  
+
     const toast = new bootstrap.Toast(toastEl, {
       delay: 2500,
     });
@@ -34,7 +34,7 @@ function App() {
   };
 
   return (
-    <ReactRouterDOM.BrowserRouter>
+    <ReactRouterDOM.HashRouter>
       <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
       <ReactRouterDOM.Route exact path="/">
         <Sidebar markers={markers} isLoggedIn={isLoggedIn} />
@@ -43,7 +43,7 @@ function App() {
         <Favorites isLoggedIn={isLoggedIn} />
       </ReactRouterDOM.Route>
       <ReactRouterDOM.Route exact path="/charger_details/:id" component={ChargerDetails} />
-    </ReactRouterDOM.BrowserRouter>
+    </ReactRouterDOM.HashRouter>
   );
 }
 
@@ -71,7 +71,7 @@ function Navbar({ isLoggedIn, handleLogout }) {
       >
         <div className="offcanvas-header border-2 border-bottom">
           <h5 className="offcanvas-title" id="mainNavigationLabel">
-            <ReactRouterDOM.Link to="/" onClick={closeOffcanvas}>EV Charge Map</ReactRouterDOM.Link>
+            <ReactRouterDOM.Link to="/" onClick={closeOffcanvas} className="d-flex align-items-center"><i className="las la-charging-station la-3x"></i><span class="evBrand">EV Charge Map</span></ReactRouterDOM.Link>
           </h5>
           <button
             type="button"
@@ -82,40 +82,43 @@ function Navbar({ isLoggedIn, handleLogout }) {
         </div>
         <div className="offcanvas-body">
           <div className="list-group list-group-flush border-bottom d-flex flex-column h-100">
+            <ReactRouterDOM.Link to="/" onClick={closeOffcanvas} className="list-group-item list-group-item-action py-3 lh-tight border-bottom d-flex align-items-center">
+              <i class="bi bi-house menu-icon"></i><span>Home</span>
+            </ReactRouterDOM.Link>
             {!isLoggedIn ? (
               <>
                 <a
-                  className="list-group-item list-group-item-action py-3 lh-tight border-bottom"
+                  className="list-group-item list-group-item-action py-3 lh-tight border-bottom d-flex align-items-center"
                   data-bs-toggle="modal"
                   data-bs-target="#registerModal"
                   onClick={closeOffcanvas}
                 >
-                  Register
+                  <i class="bi bi-input-cursor-text menu-icon"></i><span>Register</span>
                 </a>
                 <a
-                  className="list-group-item list-group-item-action py-3 lh-tight border-bottom"
+                  className="list-group-item list-group-item-action py-3 lh-tight border-bottom d-flex align-items-center"
                   data-bs-toggle="modal"
                   data-bs-target="#loginModal"
                   onClick={closeOffcanvas}
                 >
-                  Log In
+                  <i class="bi bi-person-lock menu-icon"></i><span>Log In</span>
                 </a>
               </>
             ) : null}
             {isLoggedIn ? (
-              <ReactRouterDOM.Link to="/favorites" onClick={closeOffcanvas} className="list-group-item list-group-item-action py-3 lh-tight border-bottom">
-                Favorites
+              <ReactRouterDOM.Link to="/favorites" onClick={closeOffcanvas} className="list-group-item list-group-item-action py-3 lh-tight border-bottom d-flex align-items-center">
+                <i class="bi bi-star menu-icon"></i><span>Favorites</span>
               </ReactRouterDOM.Link>
             ) : null}
             {isLoggedIn ? (
               <a
-                className="list-group-item list-group-item-action py-3 lh-tight border-bottom mt-auto"
+                className="list-group-item list-group-item-action py-3 lh-tight border-bottom mt-auto d-flex align-items-center"
                 onClick={() => {
                   handleLogout();
                   closeOffcanvas();
                 }}
               >
-                Logout
+                <i class="bi bi-box-arrow-left menu-icon"></i><span>Logout</span>
               </a>
             ) : null}
           </div>
@@ -199,8 +202,8 @@ function Sidebar(props) {
   return (
     <>
       <div className="d-flex flex-column align-items-stretch flex-shrink-0 bg-white vh-100">
-        <div className="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom position-sticky">
-          <span className="fs-5 fw-semibold">Charger List</span>
+        <div className="d-flex align-items-center flex-shrink-0 px-3 link-dark text-decoration-none border-bottom position-sticky">
+          <i class="bi bi-list-task sidebar-title-icon fs-1 mt-1 me-2"></i><span className="m-0 fs-4 fw-semibold">Charger List</span>
         </div>
         <div className="list-group list-group-flush border-bottom overflow-y-scroll scrollarea">
           {Object.keys(props.markers).map(key => {
@@ -218,7 +221,13 @@ function Sidebar(props) {
                       onClick={() => addFavorite(props.markers[key].id, props.markers[key].lat, props.markers[key].lng)}
                     >
                     </i>
-                  ) : null}
+                  ) :
+                    <i
+                      style={{ fontSize: "2rem", color: "transparent" }}
+                      className="bi bi-bookmark-star addFavorite"
+                    >
+                    </i>
+                  }
                 </div>
                 <div className="d-flex w-100 align-items-center justify-content-between">
                   <div className="col-10 mb-1 small sidebarAddress"><p>{props.markers[key].addressLine1}</p><p>{props.markers[key].town}, {props.markers[key].stateOrProvince} {props.markers[key].postcode}</p></div>
@@ -407,8 +416,8 @@ function Favorites({ isLoggedIn }) {
 
   return (
     <div className="d-flex flex-column align-items-stretch flex-shrink-0 bg-white vh-100">
-      <div className="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom position-sticky">
-        <span className="fs-5 fw-semibold">Favorites</span>
+      <div className="d-flex align-items-center flex-shrink-0 px-3 link-dark text-decoration-none border-bottom position-sticky">
+        <i class="bi bi-list-stars sidebar-title-icon fs-1 mt-1 me-2"></i><span className="m-0 fs-4 fw-semibold">Favorites</span>
       </div>
       <div className="list-group list-group-flush border-bottom overflow-y-scroll scrollarea">
         {isLoggedIn ? (
@@ -416,7 +425,7 @@ function Favorites({ isLoggedIn }) {
             <div className="list-group-item list-group-item-action py-3 lh-tight">
               <div className="d-flex w-100 align-items-center justify-content-between">
                 <ReactRouterDOM.Link key={favorite.id} to={`/charger_details/${favorite.id}`}><strong className="mb-1">{favorite.title}</strong></ReactRouterDOM.Link>
-                <i className="las la-charging-station la-3x"></i>
+                <i class="bi bi-x-circle remove-favorite"></i>
               </div>
               <div className="d-flex w-100 align-items-center justify-content-between">
                 <div className="col-10 mb-1 small sidebarAddress">

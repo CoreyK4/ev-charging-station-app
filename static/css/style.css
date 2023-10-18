@@ -27,7 +27,7 @@ a {
   left: 10px;
   width: 60px;
   height: 50px;
-  border: 2px solid #0e2431;
+  border: 2px solid #333;
   background-color: rgba(201, 201, 201, 0.8);
   border-radius: 8px;
 
@@ -70,7 +70,7 @@ a {
   height: 4px;
   width: 100%;
   border-radius: 10px;
-  background: #0e2431;
+  background: #333;
 }
 
 .hamburger-container .hamburger-lines .line1 {
@@ -94,6 +94,20 @@ a {
 .offcanvas-body {
   height: 100%;
 }
+
+.offcanvas-header {
+  padding: 0 15px 0 5px;
+}
+
+.offcanvas-header a {
+  padding-inline: 0;
+}
+
+.evBrand {
+  font-weight: bold;
+  margin-left: 8px;
+}
+
 .list-group {
   height: 100%;
 }
@@ -216,9 +230,14 @@ form textarea {
   color: #50b3a2;
 }
 
+.feedback-toast {
+  margin-top: 50px;
+}
+
 .feedback-toast .toast-body {
   background-color: rgba(80, 179, 162, 0.55);
-  color: black;
+  color: #333;
+  font-size: 18px;
   padding: 15px;
   border-radius: 5px;
   text-align: center;
@@ -226,4 +245,24 @@ form textarea {
 
 .toast-container {
   z-index: 1050;
+}
+
+.sidebar-title-icon {
+  color: #50b3a2;
+}
+
+.menu-icon {
+  color: #50b3a2;
+  font-size: 24px;
+  margin-right: 8px;
+}
+
+.addFavorite, .remove-favorite {
+  margin-bottom: -25px;
+}
+
+.remove-favorite {
+  color: rgb(204, 72, 72);
+  font-size: 1.5rem;
+  cursor: pointer;
 }
