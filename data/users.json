@@ -8001,8 +8001,8 @@
     },
     {
         "username": "Corey",
-        "raw_password": "password",
-        "password_hash": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+        "raw_password": "*npUB9YO56",
+        "password_hash": "cb3d3afb6c579c7662f62b9182ee49980166482591fb7387585fc4643bfd4cf2",
         "email": "coreykovach@example.com",
         "first_name": "Corey",
         "last_name": "Kovach"
