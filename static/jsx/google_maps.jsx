@@ -37,7 +37,7 @@ function App() {
     <ReactRouterDOM.HashRouter>
       <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
       <ReactRouterDOM.Route exact path="/">
-        <Sidebar markers={markers} isLoggedIn={isLoggedIn} />
+        <ChargerList markers={markers} isLoggedIn={isLoggedIn} />
       </ReactRouterDOM.Route>
       <ReactRouterDOM.Route exact path="/favorites">
         <Favorites isLoggedIn={isLoggedIn} />
@@ -128,7 +128,7 @@ function Navbar({ isLoggedIn, handleLogout }) {
   );
 }
 
-function Sidebar(props) {
+function ChargerList(props) {
   const [renderCount, setRenderCount] = React.useState(0);
   const [favorites, setFavorites] = React.useState([]);
 
